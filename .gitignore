@@ -1,0 +1,67 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Flask environment
+instance/
+.env
+.env.*
+*.env
+
+# Flask config
+*.cfg
+*.log
+
+# PyInstaller
+*.spec
+
+# SQLite database
+*.db
+*.sqlite3
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# VS Code settings
+.vscode/
+
+# macOS
+.DS_Store
+
+# Logs
+logs/
+*.log
+
+# Pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Pytest cache
+.pytest_cache/
+
+# Mypy
+.mypy_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Static/media files (optional)
+static/uploads/
+media/

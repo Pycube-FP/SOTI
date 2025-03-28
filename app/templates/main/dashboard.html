@@ -1,0 +1,708 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-900">
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="px-4 py-6 sm:px-0">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-semibold text-white">Sample Activity Dashboard</h1>
+                <div class="flex items-center space-x-4">
+                    <button onclick="showExportModal()" 
+                        class="inline-flex items-center px-4 py-2.5 bg-green-500/90 hover:bg-green-600 text-white font-medium rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl backdrop-blur-sm">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Export to Excel
+                    </button>
+                    <button class="inline-flex items-center px-4 py-2.5 bg-blue-500/90 hover:bg-blue-600 text-white font-medium rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl backdrop-blur-sm">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                        </svg>
+                        File Transfer Between Apps
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sample Activity Grid -->
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5 mb-8">
+            <!-- Blood Samples -->
+            <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300">
+                <div class="flex items-center">
+                    <div class="w-14 h-14 bg-gray-700/50 backdrop-blur-sm rounded-xl flex items-center justify-center mr-4 shadow-md">
+                        <svg class="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-lg font-semibold text-white mb-1">Blood Samples</h3>
+                        <div class="flex items-baseline">
+                            <div class="text-2xl font-bold text-white">24</div>
+                            <div class="ml-2 flex items-baseline text-sm font-semibold text-green-400">
+                                <svg class="self-center flex-shrink-0 h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="sr-only">Increased by</span>
+                                12%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Urine Samples -->
+            <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300">
+                <div class="flex items-center">
+                    <div class="w-14 h-14 bg-gray-700/50 backdrop-blur-sm rounded-xl flex items-center justify-center mr-4 shadow-md">
+                        <svg class="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-lg font-semibold text-white mb-1">Urine Samples</h3>
+                        <div class="flex items-baseline">
+                            <div class="text-2xl font-bold text-white">18</div>
+                            <div class="ml-2 flex items-baseline text-sm font-semibold text-green-400">
+                                <svg class="self-center flex-shrink-0 h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="sr-only">Increased by</span>
+                                8%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tissue Samples -->
+            <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300">
+                <div class="flex items-center">
+                    <div class="w-14 h-14 bg-gray-700/50 backdrop-blur-sm rounded-xl flex items-center justify-center mr-4 shadow-md">
+                        <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-lg font-semibold text-white mb-1">Tissue Samples</h3>
+                        <div class="flex items-baseline">
+                            <div class="text-2xl font-bold text-white">12</div>
+                            <div class="ml-2 flex items-baseline text-sm font-semibold text-red-400">
+                                <svg class="self-center flex-shrink-0 h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="sr-only">Decreased by</span>
+                                5%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teams Notification Tile -->
+            <div onclick="showTeamsModal()" class="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300 cursor-pointer hover:bg-gray-700/50">
+                <div class="flex items-center">
+                    <div class="w-14 h-14 bg-purple-500/20 backdrop-blur-sm rounded-xl flex items-center justify-center mr-4 shadow-md">
+                        <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-lg font-semibold text-white mb-1">Teams Notification</h3>
+                        <p class="text-sm text-gray-400">Send notifications to your team</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Tile -->
+            <div onclick="showEmailModal()" class="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300 cursor-pointer hover:bg-gray-700/50">
+                <div class="flex items-center">
+                    <div class="w-14 h-14 bg-blue-500/20 backdrop-blur-sm rounded-xl flex items-center justify-center mr-4 shadow-md">
+                        <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-lg font-semibold text-white mb-1">Send Email</h3>
+                        <p class="text-sm text-gray-400">Send emails to recipients</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Sample Activity Table -->
+        <div class="mb-8">
+            <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300">
+                <div class="px-6 py-5">
+                    <h3 class="text-lg font-semibold text-white">Recent Sample Activity</h3>
+                </div>
+                <div class="border-t border-gray-700/50">
+                    <table class="min-w-full divide-y divide-gray-700/50">
+                        <thead class="bg-gray-700/50">
+                            <tr>
+                                <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Sample ID</th>
+                                <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Type</th>
+                                <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Collection Date</th>
+                                <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Status</th>
+                                <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Location</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-gray-800/50 divide-y divide-gray-700/50">
+                            <tr class="hover:bg-gray-700/50 transition-all duration-300">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-white">BLD-2024-001</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-white">Blood</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-white">2024-03-15</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-3 py-1.5 text-sm font-medium rounded-full bg-green-500/10 text-green-400 border border-green-500/20">Processed</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-white">Lab 1</td>
+                            </tr>
+                            <tr class="hover:bg-gray-700/50 transition-all duration-300">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-white">URN-2024-002</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-white">Urine</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-white">2024-03-15</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-3 py-1.5 text-sm font-medium rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">Pending</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-white">Lab 2</td>
+                            </tr>
+                            <tr class="hover:bg-gray-700/50 transition-all duration-300">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-white">TIS-2024-003</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-white">Tissue</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-white">2024-03-14</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-3 py-1.5 text-sm font-medium rounded-full bg-red-500/10 text-red-400 border border-red-500/20">Failed</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-white">Lab 3</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Sections Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+        </div>
+
+        <!-- Main Content -->
+        <div class="container mx-auto px-4 py-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-8">Sample Activity Dashboard</h1>
+
+            <!-- SOTI Devices Section -->
+            <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg p-8 mb-8 border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 space-y-4 md:space-y-0 md:space-x-4">
+                    <h2 class="text-xl font-semibold text-white">SOTI Managed Devices</h2>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 w-full md:w-auto">
+                        <div class="relative flex-grow md:min-w-[300px]">
+                            <input type="text" 
+                                   id="deviceSearch" 
+                                   onkeyup="filterDevices()" 
+                                   placeholder="Search devices..." 
+                                   class="w-full h-12 rounded-xl bg-white border-gray-300 text-gray-900 placeholder-gray-500 shadow-lg focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 px-4 text-base">
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <button onclick="refreshDevices()" 
+                                class="inline-flex items-center justify-center px-6 py-3 bg-blue-500/90 hover:bg-blue-600 text-white font-medium rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl backdrop-blur-sm whitespace-nowrap">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                            Refresh
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Device Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-gray-700/50 backdrop-blur-sm rounded-xl p-6 border border-gray-600/50 transition-all duration-300 shadow-lg">
+                        <h3 class="text-green-400 font-semibold mb-2">Online Devices</h3>
+                        <p class="text-2xl font-bold text-white" id="onlineDevices">{{ soti_devices.stats.online }}</p>
+                    </div>
+                    <div class="bg-gray-700/50 backdrop-blur-sm rounded-xl p-6 border border-gray-600/50 transition-all duration-300 shadow-lg">
+                        <h3 class="text-red-400 font-semibold mb-2">Offline Devices</h3>
+                        <p class="text-2xl font-bold text-white" id="offlineDevices">{{ soti_devices.stats.offline }}</p>
+                    </div>
+                    <div class="bg-gray-700/50 backdrop-blur-sm rounded-xl p-6 border border-gray-600/50 transition-all duration-300 shadow-lg">
+                        <h3 class="text-yellow-400 font-semibold mb-2">Pending Updates</h3>
+                        <p class="text-2xl font-bold text-white" id="pendingDevices">{{ soti_devices.stats.pending }}</p>
+                    </div>
+                    <div class="bg-gray-700/50 backdrop-blur-sm rounded-xl p-6 border border-gray-600/50 transition-all duration-300 shadow-lg">
+                        <h3 class="text-blue-400 font-semibold mb-2">Total Devices</h3>
+                        <p class="text-2xl font-bold text-white" id="totalDevices">{{ soti_devices.stats.total }}</p>
+                    </div>
+                </div>
+
+                <!-- Devices Table -->
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-gray-700/50 backdrop-blur-sm rounded-xl border border-gray-600/50">
+                        <thead class="bg-gray-800/50">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Device Name</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Model</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Manufacturer</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">OS Version</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Serial Number</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-600/50" id="deviceTableBody">
+                            {% if not soti_devices.devices %}
+                                <tr>
+                                    <td colspan="7" class="px-6 py-4 text-center text-gray-400">No devices found</td>
+                                </tr>
+                            {% else %}
+                                {% for device in soti_devices.devices %}
+                                    <tr class="text-gray-300 hover:bg-gray-600/50 transition-all duration-300">
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ device.name }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-3 py-1.5 text-sm font-medium rounded-full {% if device.status == 'Online' %}bg-green-500/10 text-green-400 border border-green-500/20{% else %}bg-red-500/10 text-red-400 border border-red-500/20{% endif %}">
+                                                {{ device.status }}
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ device.model }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ device.manufacturer }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ device.osVersion }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ device.serialNumber }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center space-x-3">
+                                                <button onclick="refreshDevice('{{ device.id }}')" class="inline-flex items-center text-blue-400 hover:text-blue-300 transition-all duration-300" title="Refresh Device">
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                                    </svg>
+                                                </button>
+                                                <button onclick="showDeviceDetails('{{ device.id }}')" class="inline-flex items-center text-blue-400 hover:text-blue-300 transition-all duration-300" title="View Details">
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Device Details Modal -->
+<div id="deviceDetailsModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full backdrop-blur-sm">
+    <div class="relative top-20 mx-auto p-8 border w-3/4 shadow-lg rounded-xl bg-gray-800/90 border-gray-700/50">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-semibold text-white">Device Details</h3>
+            <button onclick="hideDeviceDetails()" class="text-gray-400 hover:text-gray-300 transition-all duration-300">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <div id="deviceDetailsContent" class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Device details will be populated here -->
+        </div>
+    </div>
+</div>
+
+<!-- Teams Notification Modal -->
+<div id="teamsModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 overflow-y-auto h-full w-full z-50">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="relative w-2/3 max-w-2xl p-8 border shadow-lg rounded-xl bg-gray-800 border-gray-700/50">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-semibold text-white">Send Teams Notification</h3>
+                <button onclick="hideTeamsModal()" class="text-gray-400 hover:text-gray-300 transition-all duration-300">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <form method="POST" action="{{ url_for('main.send_teams_notification') }}" class="space-y-6">
+                {{ form.csrf_token }}
+                <div>
+                    <label for="channel" class="block text-sm font-medium text-gray-300 mb-2">Channel</label>
+                    {{ form.channel(class="w-full h-12 rounded-xl bg-white border-gray-300 text-gray-900 placeholder-gray-500 shadow-lg focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 px-4") }}
+                </div>
+                <div>
+                    <label for="message" class="block text-sm font-medium text-gray-300 mb-2">Message</label>
+                    {{ form.message(class="w-full rounded-xl bg-white border-gray-300 text-gray-900 placeholder-gray-500 shadow-lg focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 px-4 py-3", rows="4") }}
+                </div>
+                <div>
+                    <label for="priority" class="block text-sm font-medium text-gray-300 mb-2">Priority</label>
+                    {{ form.priority(class="w-full h-12 rounded-xl bg-white border-gray-300 text-gray-900 placeholder-gray-500 shadow-lg focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 px-4") }}
+                </div>
+                <button type="submit" class="w-full inline-flex justify-center items-center px-6 py-3 bg-purple-500/90 hover:bg-purple-600 text-white font-medium rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                    </svg>
+                    Send Notification
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Email Modal -->
+<div id="emailModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 overflow-y-auto h-full w-full z-50">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="relative w-2/3 max-w-2xl p-8 border shadow-lg rounded-xl bg-gray-800 border-gray-700/50">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-semibold text-white">Send Email</h3>
+                <button onclick="hideEmailModal()" class="text-gray-400 hover:text-gray-300 transition-all duration-300">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <form method="POST" action="{{ url_for('main.send_email') }}" class="space-y-6">
+                {{ email_form.csrf_token }}
+                <div>
+                    <label for="to" class="block text-sm font-medium text-gray-300 mb-2">To</label>
+                    {{ email_form.to(class="w-full h-12 rounded-xl bg-white border-gray-300 text-gray-900 placeholder-gray-500 shadow-lg focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 px-4") }}
+                </div>
+                <div>
+                    <label for="subject" class="block text-sm font-medium text-gray-300 mb-2">Subject</label>
+                    {{ email_form.subject(class="w-full h-12 rounded-xl bg-white border-gray-300 text-gray-900 placeholder-gray-500 shadow-lg focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 px-4") }}
+                </div>
+                <div>
+                    <label for="body" class="block text-sm font-medium text-gray-300 mb-2">Message</label>
+                    {{ email_form.body(class="w-full rounded-xl bg-white border-gray-300 text-gray-900 placeholder-gray-500 shadow-lg focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 px-4 py-3", rows="4") }}
+                </div>
+                <div>
+                    <label for="priority" class="block text-sm font-medium text-gray-300 mb-2">Priority</label>
+                    {{ email_form.priority(class="w-full h-12 rounded-xl bg-white border-gray-300 text-gray-900 placeholder-gray-500 shadow-lg focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 px-4") }}
+                </div>
+                <button type="submit" class="w-full inline-flex justify-center items-center px-6 py-3 bg-blue-500/90 hover:bg-blue-600 text-white font-medium rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    Send Email
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function refreshDevices() {
+        fetch('/api/soti/devices')
+            .then(response => response.json())
+            .then(data => {
+                console.log('SOTI Devices Data:', data);
+                updateDeviceStats(data.stats);
+                updateDeviceTable(data.devices);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showToast('Error refreshing devices', 'error');
+            });
+    }
+
+    function refreshDevice(deviceId) {
+        fetch(`/api/soti/devices/${deviceId}/refresh`, {
+            method: 'POST'
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    showToast(data.error, 'error');
+                } else {
+                    showToast('Device refreshed successfully', 'success');
+                    refreshDevices();  // Refresh the entire list
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showToast('Error refreshing device', 'error');
+            });
+    }
+
+    function updateDeviceStats(stats) {
+        console.log('Updating device stats:', stats);
+        
+        // Update the stats display with animation
+        animateNumber('onlineDevices', stats.online);
+        animateNumber('offlineDevices', stats.offline);
+        animateNumber('pendingDevices', stats.pending);
+        animateNumber('totalDevices', stats.total);
+    }
+
+    function animateNumber(elementId, newValue) {
+        const element = document.getElementById(elementId);
+        const currentValue = parseInt(element.textContent) || 0;
+        const diff = newValue - currentValue;
+        const duration = 1000; // Animation duration in milliseconds
+        const steps = 20; // Number of steps in the animation
+        const stepValue = diff / steps;
+        let currentStep = 0;
+
+        const interval = setInterval(() => {
+            currentStep++;
+            const value = Math.round(currentValue + (stepValue * currentStep));
+            element.textContent = value;
+            
+            if (currentStep >= steps) {
+                element.textContent = newValue; // Ensure final value is exact
+                clearInterval(interval);
+            }
+        }, duration / steps);
+    }
+
+    function updateDeviceTable(devices) {
+        console.log('Updating device table with devices:', devices);
+        const tbody = document.getElementById('deviceTableBody');
+        tbody.innerHTML = '';
+        
+        if (!devices || devices.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="7" class="px-6 py-4 text-center text-gray-400">No devices found</td>
+                </tr>
+            `;
+            return;
+        }
+        
+        devices.forEach(device => {
+            const row = document.createElement('tr');
+            row.className = 'text-gray-300 hover:bg-gray-600/50 transition-all duration-300';
+            
+            row.innerHTML = `
+                <td class="px-6 py-4 whitespace-nowrap">${device.name || 'N/A'}</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <span class="px-3 py-1.5 text-sm font-medium rounded-full ${
+                        device.status === 'Online' 
+                            ? 'bg-green-500/10 text-green-400 border border-green-500/20' 
+                            : 'bg-red-500/10 text-red-400 border border-red-500/20'
+                    }">
+                        ${device.status || 'Unknown'}
+                    </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">${device.model || 'N/A'}</td>
+                <td class="px-6 py-4 whitespace-nowrap">${device.manufacturer || 'N/A'}</td>
+                <td class="px-6 py-4 whitespace-nowrap">${device.osVersion || 'N/A'}</td>
+                <td class="px-6 py-4 whitespace-nowrap">${device.serialNumber || 'N/A'}</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center space-x-3">
+                        <button onclick="refreshDevice('${device.id}')" class="inline-flex items-center text-blue-400 hover:text-blue-300 transition-all duration-300" title="Refresh Device">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                        </button>
+                        <button onclick="showDeviceDetails('${device.id}')" class="inline-flex items-center text-blue-400 hover:text-blue-300 transition-all duration-300" title="View Details">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                        </button>
+                    </div>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    function showDeviceDetails(deviceId) {
+        fetch(`/api/soti/devices/${deviceId}`)
+            .then(response => response.json())
+            .then(device => {
+                const content = document.getElementById('deviceDetailsContent');
+                
+                // Format the device details in a grid layout
+                content.innerHTML = `
+                    <!-- Basic Information -->
+                    <div class="bg-gray-700/50 backdrop-blur-sm rounded-xl p-6 border border-gray-600/50">
+                        <h4 class="text-lg font-semibold text-white mb-4">Basic Information</h4>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="text-sm text-gray-400">Device Name</label>
+                                <p class="text-white">${device.name || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <label class="text-sm text-gray-400">Status</label>
+                                <p>
+                                    <span class="px-3 py-1.5 text-sm font-medium rounded-full ${
+                                        device.status === 'Online' 
+                                            ? 'bg-green-500/10 text-green-400 border border-green-500/20' 
+                                            : 'bg-red-500/10 text-red-400 border border-red-500/20'
+                                    }">
+                                        ${device.status || 'Unknown'}
+                                    </span>
+                                </p>
+                            </div>
+                            <div>
+                                <label class="text-sm text-gray-400">Model</label>
+                                <p class="text-white">${device.model || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <label class="text-sm text-gray-400">Manufacturer</label>
+                                <p class="text-white">${device.manufacturer || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <label class="text-sm text-gray-400">Serial Number</label>
+                                <p class="text-white">${device.serialNumber || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <label class="text-sm text-gray-400">OS Version</label>
+                                <p class="text-white">${device.osVersion || 'N/A'}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Connection Information -->
+                    <div class="bg-gray-700/50 backdrop-blur-sm rounded-xl p-6 border border-gray-600/50">
+                        <h4 class="text-lg font-semibold text-white mb-4">Connection Information</h4>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="text-sm text-gray-400">IP Address</label>
+                                <p class="text-white">${device.ipAddress || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <label class="text-sm text-gray-400">WiFi SSID</label>
+                                <p class="text-white">${device.wifiSSID || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <label class="text-sm text-gray-400">Battery Level</label>
+                                <p class="text-white">${device.batteryLevel || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <label class="text-sm text-gray-400">Last Connected</label>
+                                <p class="text-white">${formatDate(device.lastConnected) || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <label class="text-sm text-gray-400">Last Seen</label>
+                                <p class="text-white">${formatDate(device.lastSeen) || 'N/A'}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location Information -->
+                    <div class="bg-gray-700/50 backdrop-blur-sm rounded-xl p-6 border border-gray-600/50">
+                        <h4 class="text-lg font-semibold text-white mb-4">Location Information</h4>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="text-sm text-gray-400">Address</label>
+                                <p class="text-white">${device.location?.address || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <label class="text-sm text-gray-400">Coordinates</label>
+                                <p class="text-white">
+                                    ${device.location?.latitude !== 'N/A' && device.location?.longitude !== 'N/A'
+                                        ? `${device.location.latitude}, ${device.location.longitude}`
+                                        : 'N/A'}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Show the modal
+                document.getElementById('deviceDetailsModal').classList.remove('hidden');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showToast('Error fetching device details', 'error');
+            });
+    }
+
+    function hideDeviceDetails() {
+        document.getElementById('deviceDetailsModal').classList.add('hidden');
+    }
+
+    function formatDate(dateString) {
+        if (!dateString || dateString === 'N/A') return 'N/A';
+        try {
+            const date = new Date(dateString);
+            return date.toLocaleString();
+        } catch (e) {
+            console.warn('Error formatting date:', e);
+            return dateString;
+        }
+    }
+
+    function filterDevices() {
+        const searchText = document.getElementById('deviceSearch').value.toLowerCase().trim();
+        const rows = document.getElementById('deviceTableBody').getElementsByTagName('tr');
+        let visibleCount = 0;
+        
+        for (let row of rows) {
+            if (row.cells.length < 2) continue; // Skip rows without proper cells
+            
+            const deviceName = row.cells[0]?.textContent.toLowerCase() || '';
+            const model = row.cells[2]?.textContent.toLowerCase() || '';
+            const manufacturer = row.cells[3]?.textContent.toLowerCase() || '';
+            const osVersion = row.cells[4]?.textContent.toLowerCase() || '';
+            const serialNumber = row.cells[5]?.textContent.toLowerCase() || '';
+            
+            const isVisible = searchText === '' || 
+                deviceName.includes(searchText) || 
+                model.includes(searchText) || 
+                manufacturer.includes(searchText) ||
+                osVersion.includes(searchText) ||
+                serialNumber.includes(searchText);
+            
+            row.style.display = isVisible ? '' : 'none';
+            if (isVisible) visibleCount++;
+        }
+        
+        // Update "No devices found" message
+        if (visibleCount === 0 && searchText !== '') {
+            const tbody = document.getElementById('deviceTableBody');
+            if (tbody.querySelector('tr[data-no-results]')) return;
+            
+            const noResults = document.createElement('tr');
+            noResults.setAttribute('data-no-results', 'true');
+            noResults.innerHTML = `
+                <td colspan="7" class="px-6 py-4 text-center text-gray-400">
+                    No devices found matching "${searchText}"
+                </td>
+            `;
+            tbody.appendChild(noResults);
+        } else {
+            const noResults = document.getElementById('deviceTableBody').querySelector('tr[data-no-results]');
+            if (noResults) noResults.remove();
+        }
+    }
+
+    // Add event listener for search input
+    document.getElementById('deviceSearch').addEventListener('input', filterDevices);
+
+    // Auto-refresh devices every 5 minutes
+    setInterval(refreshDevices, 300000);
+
+    function showTeamsModal() {
+        document.getElementById('teamsModal').classList.remove('hidden');
+    }
+
+    function hideTeamsModal() {
+        document.getElementById('teamsModal').classList.add('hidden');
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('teamsModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            hideTeamsModal();
+        }
+    });
+
+    function showEmailModal() {
+        document.getElementById('emailModal').classList.remove('hidden');
+    }
+
+    function hideEmailModal() {
+        document.getElementById('emailModal').classList.add('hidden');
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('emailModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            hideEmailModal();
+        }
+    });
+</script>
+{% endblock %} 

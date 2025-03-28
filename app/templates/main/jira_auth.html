@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+        <div>
+            <div class="w-24 h-24 mx-auto bg-gray-800 rounded-lg flex items-center justify-center">
+                <img src="{{ url_for('static', filename='svg/connectors/jira.svg') }}" alt="JIRA Connector" class="w-20 h-20 object-contain">
+            </div>
+            <h2 class="mt-6 text-center text-3xl font-extrabold text-white">
+                Connect to JIRA
+            </h2>
+            <p class="mt-2 text-center text-sm text-gray-400">
+                Enter your JIRA credentials to connect
+            </p>
+        </div>
+        <form class="mt-8 space-y-6" action="{{ url_for('main.jira_callback') }}" method="POST">
+            <div class="rounded-md shadow-sm -space-y-px">
+                <div>
+                    <label for="jira_url" class="sr-only">JIRA URL</label>
+                    <input id="jira_url" name="jira_url" type="url" required 
+                           class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-700 bg-gray-800 text-white placeholder-gray-400 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" 
+                           placeholder="JIRA URL (e.g., https://your-domain.atlassian.net)">
+                </div>
+                <div>
+                    <label for="username" class="sr-only">Email/Username</label>
+                    <input id="username" name="username" type="email" required 
+                           class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-700 bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" 
+                           placeholder="Email/Username">
+                </div>
+                <div>
+                    <label for="api_token" class="sr-only">API Token</label>
+                    <input id="api_token" name="api_token" type="password" required 
+                           class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-700 bg-gray-800 text-white placeholder-gray-400 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" 
+                           placeholder="API Token">
+                </div>
+            </div>
+
+            <div class="text-sm text-center">
+                <a href="https://id.atlassian.com/manage-profile/security/api-tokens" target="_blank" class="font-medium text-indigo-400 hover:text-indigo-300">
+                    Get your API token here
+                </a>
+            </div>
+
+            <div>
+                <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                        <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </span>
+                    Connect
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %} 

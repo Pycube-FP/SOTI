@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="py-6">
+        <div class="flex items-center justify-between">
+            <h1 class="text-3xl font-bold text-white">Connectors</h1>
+            <div class="flex items-center space-x-4">
+                <button class="inline-flex items-center px-4 py-2.5 bg-green-500/90 hover:bg-green-600 text-white font-medium rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl backdrop-blur-sm">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Export to Excel
+                </button>
+                <button class="inline-flex items-center px-4 py-2.5 bg-blue-500/90 hover:bg-blue-600 text-white font-medium rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl backdrop-blur-sm">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                    </svg>
+                    File Transfer Between Apps
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Connectors Grid -->
+    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 py-4">
+        <!-- Slack Connector -->
+        <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden aspect-square border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300">
+            <div class="h-full flex flex-col p-8">
+                <div class="flex items-start justify-between mb-8">
+                    <div class="flex items-start">
+                        <div class="w-16 h-16 bg-gray-700/50 backdrop-blur-sm rounded-xl flex items-center justify-center mr-4 shadow-md">
+                            <img src="{{ url_for('static', filename='svg/connectors/slack.svg') }}" alt="Slack Connector" class="w-12 h-12 object-contain">
+                        </div>
+                        <div class="mt-2">
+                            <h3 class="text-xl font-semibold text-white mb-1">Slack</h3>
+                            <p class="text-sm text-gray-400">{% if auth_status.slack %}Connected to{% else %}Connect to{% endif %} Slack</p>
+                        </div>
+                    </div>
+                    <span class="px-3 py-1.5 text-sm font-medium rounded-full {% if auth_status.slack %}bg-green-500/10 text-green-400 border border-green-500/20{% else %}bg-red-500/10 text-red-400 border border-red-500/20{% endif %}">
+                        {{ 'Active' if auth_status.slack else 'Disabled' }}
+                    </span>
+                </div>
+                <button class="w-full bg-blue-500/90 hover:bg-blue-600 text-white font-medium py-3.5 px-4 rounded-xl transition-all duration-300 text-base mt-auto backdrop-blur-sm shadow-lg hover:shadow-xl">
+                    Configure
+                </button>
+            </div>
+        </div>
+
+        <!-- Teams Connector -->
+        <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden aspect-square border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300">
+            <div class="h-full flex flex-col p-8">
+                <div class="flex items-start justify-between mb-8">
+                    <div class="flex items-start">
+                        <div class="w-16 h-16 bg-gray-700/50 backdrop-blur-sm rounded-xl flex items-center justify-center mr-4 shadow-md">
+                            <img src="{{ url_for('static', filename='svg/connectors/teams.svg') }}" alt="Teams Connector" class="w-12 h-12 object-contain">
+                        </div>
+                        <div class="mt-2">
+                            <h3 class="text-xl font-semibold text-white mb-1">Teams</h3>
+                            <p class="text-sm text-gray-400">{% if auth_status.teams %}Connected to{% else %}Connect to{% endif %} Teams</p>
+                        </div>
+                    </div>
+                    <span class="px-3 py-1.5 text-sm font-medium rounded-full {% if auth_status.teams %}bg-green-500/10 text-green-400 border border-green-500/20{% else %}bg-red-500/10 text-red-400 border border-red-500/20{% endif %}">
+                        {{ 'Active' if auth_status.teams else 'Disabled' }}
+                    </span>
+                </div>
+                {% if auth_status.teams %}
+                <a href="{{ url_for('main.revoke_auth', service='teams') }}" class="w-full bg-red-500/90 hover:bg-red-600 text-white font-medium py-3.5 px-4 rounded-xl transition-all duration-300 text-base mt-auto backdrop-blur-sm shadow-lg hover:shadow-xl">
+                    Disable
+                </a>
+                {% else %}
+                <a href="{{ url_for('main.teams_auth') }}" class="w-full bg-blue-500/90 hover:bg-blue-600 text-white font-medium py-3.5 px-4 rounded-xl transition-all duration-300 text-base mt-auto backdrop-blur-sm shadow-lg hover:shadow-xl">
+                    Configure
+                </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Outlook Connector -->
+        <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden aspect-square border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300">
+            <div class="h-full flex flex-col p-8">
+                <div class="flex items-start justify-between mb-8">
+                    <div class="flex items-start">
+                        <div class="w-16 h-16 bg-gray-700/50 backdrop-blur-sm rounded-xl flex items-center justify-center mr-4 shadow-md">
+                            <img src="{{ url_for('static', filename='svg/connectors/outlook.svg') }}" alt="Outlook Connector" class="w-12 h-12 object-contain">
+                        </div>
+                        <div class="mt-2">
+                            <h3 class="text-xl font-semibold text-white mb-1">Outlook</h3>
+                            <p class="text-sm text-gray-400">{% if auth_status.outlook %}Connected to{% else %}Connect to{% endif %} Outlook</p>
+                        </div>
+                    </div>
+                    <span class="px-3 py-1.5 text-sm font-medium rounded-full {% if auth_status.outlook %}bg-green-500/10 text-green-400 border border-green-500/20{% else %}bg-red-500/10 text-red-400 border border-red-500/20{% endif %}">
+                        {{ 'Active' if auth_status.outlook else 'Disabled' }}
+                    </span>
+                </div>
+                {% if auth_status.outlook %}
+                <a href="{{ url_for('main.revoke_auth', service='outlook') }}" class="w-full bg-red-500/90 hover:bg-red-600 text-white font-medium py-3.5 px-4 rounded-xl transition-all duration-300 text-base mt-auto backdrop-blur-sm shadow-lg hover:shadow-xl">
+                    Disable
+                </a>
+                {% else %}
+                <a href="{{ url_for('main.outlook_auth') }}" class="w-full bg-blue-500/90 hover:bg-blue-600 text-white font-medium py-3.5 px-4 rounded-xl transition-all duration-300 text-base mt-auto backdrop-blur-sm shadow-lg hover:shadow-xl">
+                    Configure
+                </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- JIRA Connector -->
+        <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden aspect-square border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300">
+            <div class="h-full flex flex-col p-8">
+                <div class="flex items-start justify-between mb-8">
+                    <div class="flex items-start">
+                        <div class="w-16 h-16 bg-gray-700/50 backdrop-blur-sm rounded-xl flex items-center justify-center mr-4 shadow-md">
+                            <img src="{{ url_for('static', filename='svg/connectors/jira.svg') }}" alt="JIRA Connector" class="w-12 h-12 object-contain">
+                        </div>
+                        <div class="mt-2">
+                            <h3 class="text-xl font-semibold text-white mb-1">JIRA</h3>
+                            <p class="text-sm text-gray-400">{% if auth_status.jira %}Connected to{% else %}Connect to{% endif %} JIRA</p>
+                        </div>
+                    </div>
+                    <span class="px-3 py-1.5 text-sm font-medium rounded-full {% if auth_status.jira %}bg-green-500/10 text-green-400 border border-green-500/20{% else %}bg-red-500/10 text-red-400 border border-red-500/20{% endif %}">
+                        {{ 'Active' if auth_status.jira else 'Disabled' }}
+                    </span>
+                </div>
+                {% if auth_status.jira %}
+                <a href="{{ url_for('main.revoke_auth', service='jira') }}" class="w-full bg-red-500/90 hover:bg-red-600 text-white font-medium py-3.5 px-4 rounded-xl transition-all duration-300 text-base mt-auto backdrop-blur-sm shadow-lg hover:shadow-xl">
+                    Disable
+                </a>
+                {% else %}
+                <a href="{{ url_for('main.jira_auth') }}" class="w-full bg-blue-500/90 hover:bg-blue-600 text-white font-medium py-3.5 px-4 rounded-xl transition-all duration-300 text-base mt-auto backdrop-blur-sm shadow-lg hover:shadow-xl">
+                    Configure
+                </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- SOTI Connector -->
+        <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden aspect-square border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300">
+            <div class="h-full flex flex-col p-8">
+                <div class="flex items-start justify-between mb-8">
+                    <div class="flex items-start">
+                        <div class="w-16 h-16 bg-gray-700/50 backdrop-blur-sm rounded-xl flex items-center justify-center mr-4 shadow-md">
+                            <img src="{{ url_for('static', filename='svg/connectors/soti.png') }}" alt="SOTI Connector" class="w-12 h-12 object-contain">
+                        </div>
+                        <div class="mt-2">
+                            <h3 class="text-xl font-semibold text-white mb-1">SOTI</h3>
+                            <p class="text-sm text-gray-400">{% if auth_status.soti %}Connected to{% else %}Connect to{% endif %} SOTI</p>
+                        </div>
+                    </div>
+                    <span class="px-3 py-1.5 text-sm font-medium rounded-full {% if auth_status.soti %}bg-green-500/10 text-green-400 border border-green-500/20{% else %}bg-red-500/10 text-red-400 border border-red-500/20{% endif %}">
+                        {{ 'Active' if auth_status.soti else 'Disabled' }}
+                    </span>
+                </div>
+                {% if auth_status.soti %}
+                <a href="{{ url_for('main.revoke_auth', service='soti') }}" class="w-full bg-red-500/90 hover:bg-red-600 text-white font-medium py-3.5 px-4 rounded-xl transition-all duration-300 text-base mt-auto backdrop-blur-sm shadow-lg hover:shadow-xl">
+                    Disable
+                </a>
+                {% else %}
+                <a href="{{ url_for('main.soti_auth') }}" class="w-full bg-blue-500/90 hover:bg-blue-600 text-white font-medium py-3.5 px-4 rounded-xl transition-all duration-300 text-base mt-auto backdrop-blur-sm shadow-lg hover:shadow-xl">
+                    Configure
+                </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- OneDrive Connector -->
+        <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden aspect-square border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300">
+            <div class="h-full flex flex-col p-8">
+                <div class="flex items-start justify-between mb-8">
+                    <div class="flex items-start">
+                        <div class="w-16 h-16 bg-gray-700/50 backdrop-blur-sm rounded-xl flex items-center justify-center mr-4 shadow-md">
+                            <img src="{{ url_for('static', filename='svg/connectors/onedrive.svg') }}" alt="OneDrive Connector" class="w-12 h-12 object-contain">
+                        </div>
+                        <div class="mt-2">
+                            <h3 class="text-xl font-semibold text-white mb-1">OneDrive</h3>
+                            <p class="text-sm text-gray-400">{% if auth_status.onedrive %}Connected to{% else %}Connect to{% endif %} OneDrive</p>
+                        </div>
+                    </div>
+                    <span class="px-3 py-1.5 text-sm font-medium rounded-full {% if auth_status.onedrive %}bg-green-500/10 text-green-400 border border-green-500/20{% else %}bg-red-500/10 text-red-400 border border-red-500/20{% endif %}">
+                        {{ 'Active' if auth_status.onedrive else 'Disabled' }}
+                    </span>
+                </div>
+                {% if auth_status.onedrive %}
+                <a href="{{ url_for('main.revoke_auth', service='onedrive') }}" class="w-full bg-red-500/90 hover:bg-red-600 text-white font-medium py-3.5 px-4 rounded-xl transition-all duration-300 text-base mt-auto backdrop-blur-sm shadow-lg hover:shadow-xl">
+                    Disable
+                </a>
+                {% else %}
+                <a href="{{ url_for('main.onedrive_auth') }}" class="w-full bg-blue-500/90 hover:bg-blue-600 text-white font-medium py-3.5 px-4 rounded-xl transition-all duration-300 text-base mt-auto backdrop-blur-sm shadow-lg hover:shadow-xl">
+                    Configure
+                </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Dropbox Connector -->
+        <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden aspect-square border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300">
+            <div class="h-full flex flex-col p-8">
+                <div class="flex items-start justify-between mb-8">
+                    <div class="flex items-start">
+                        <div class="w-16 h-16 bg-gray-700/50 backdrop-blur-sm rounded-xl flex items-center justify-center mr-4 shadow-md">
+                            <svg class="w-12 h-12 text-blue-500" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2L6 7l6 5-6 5 6 5 6-5-6-5 6-5z"/>
+                            </svg>
+                        </div>
+                        <div class="mt-2">
+                            <h3 class="text-xl font-semibold text-white mb-1">Dropbox</h3>
+                            <p class="text-sm text-gray-400">{% if auth_status.dropbox %}Connected to{% else %}Connect to{% endif %} Dropbox</p>
+                        </div>
+                    </div>
+                    <span class="px-3 py-1.5 text-sm font-medium rounded-full {% if auth_status.dropbox %}bg-green-500/10 text-green-400 border border-green-500/20{% else %}bg-red-500/10 text-red-400 border border-red-500/20{% endif %}">
+                        {{ 'Active' if auth_status.dropbox else 'Disabled' }}
+                    </span>
+                </div>
+                {% if auth_status.dropbox %}
+                <a href="{{ url_for('main.revoke_auth', service='dropbox') }}" class="w-full bg-red-500/90 hover:bg-red-600 text-white font-medium py-3.5 px-4 rounded-xl transition-all duration-300 text-base mt-auto backdrop-blur-sm shadow-lg hover:shadow-xl">
+                    Disable
+                </a>
+                {% else %}
+                <a href="{{ url_for('main.dropbox_auth') }}" class="w-full bg-blue-500/90 hover:bg-blue-600 text-white font-medium py-3.5 px-4 rounded-xl transition-all duration-300 text-base mt-auto backdrop-blur-sm shadow-lg hover:shadow-xl">
+                    Configure
+                </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Add New Connector -->
+        <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden aspect-square border-2 border-dashed border-gray-600/30 hover:border-gray-500/50 transition-all duration-300">
+            <div class="h-full flex flex-col p-8">
+                <div class="flex items-center justify-between">
+                    <button class="flex items-center text-gray-400 hover:text-white transition-colors duration-300 group">
+                        <div class="w-16 h-16 bg-gray-700/50 backdrop-blur-sm rounded-xl flex items-center justify-center mr-4 shadow-md group-hover:bg-gray-600/50 transition-all duration-300">
+                            <svg class="h-10 w-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            </svg>
+                        </div>
+                        <div class="mt-2">
+                            <h3 class="text-xl font-semibold mb-1">Add New</h3>
+                            <p class="text-sm">Add a connector</p>
+                        </div>
+                    </button>
+                    <a href="{{ url_for('main.check_auth') }}" class="inline-flex items-center px-4 py-2 border border-gray-600/50 hover:border-gray-500 text-sm font-medium rounded-xl text-white bg-gray-700/50 hover:bg-gray-600/50 transition-all duration-300 backdrop-blur-sm">
+                        <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Check Auth
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
