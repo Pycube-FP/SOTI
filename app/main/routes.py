@@ -14,6 +14,10 @@ import urllib.parse
 import json
 import secrets
 from app.utils.soti_client import SotiClient
+from app.services.soti_service import SotiService
+
+# Create singleton instance
+soti_service = SotiService()
 
 def validate_token(token, service_name):
     if not token:
@@ -1163,103 +1167,79 @@ def export_to_dropbox():
 
     return redirect(url_for('main.dashboard'))
 
-@bp.route('/api/soti/devices')
+@bp.route('/devices')
 @login_required
-def get_soti_devices():
-    """Get list of SOTI managed devices"""
+def devices():
+    """
+    Render the devices page with initial device data.
+    """
     try:
-        # Get SOTI credentials from session
-        soti_creds = session.get('soti_credentials')
-        if not soti_creds:
-            current_app.logger.error("No SOTI credentials found")
-            return jsonify({
-                'error': 'SOTI authentication required',
-                'devices': [],
-                'stats': {'online': 0, 'offline': 0, 'pending': 0, 'total': 0}
-            }), 401
-
-        # Initialize SOTI client
-        soti_client = SotiClient(
-            server_url=soti_creds['server_url'],
-            client_id=soti_creds['client_id'],
-            client_secret=soti_creds['client_secret'],
-            username=soti_creds['username'],
-            password=soti_creds['password']
-        )
-
-        # Get devices and stats
-        result = soti_client.get_devices()
-        return jsonify(result)
-
+        # Check if SOTI configuration is complete
+        required_configs = ['SOTI_SERVER_URL', 'SOTI_CLIENT_ID', 'SOTI_CLIENT_SECRET', 'SOTI_USERNAME', 'SOTI_PASSWORD']
+        missing_configs = [config for config in required_configs if not current_app.config.get(config)]
+        
+        if missing_configs:
+            error_msg = f"SOTI configuration is incomplete. Missing: {', '.join(missing_configs)}"
+            current_app.logger.error(error_msg)
+            return render_template('error.html', error=error_msg), 500
+        
+        current_app.logger.info("Attempting to fetch SOTI devices...")
+        devices_data = soti_service.get_devices()
+        current_app.logger.info("Successfully fetched SOTI devices")
+        return render_template('main/devices.html', soti_devices=devices_data)
     except Exception as e:
-        current_app.logger.error(f"Error fetching SOTI devices: {str(e)}")
-        current_app.logger.debug("Exception details:", exc_info=True)
-        return jsonify({
-            'error': str(e),
-            'devices': [],
-            'stats': {'online': 0, 'offline': 0, 'pending': 0, 'total': 0}
-        }), 500
-
-@bp.route('/api/soti/devices/<device_id>')
-@login_required
-def get_soti_device_details(device_id):
-    """Get detailed information for a specific SOTI device"""
-    try:
-        # Get SOTI credentials from session
-        soti_creds = session.get('soti_credentials')
-        if not soti_creds:
-            return jsonify({'error': 'SOTI authentication required'}), 401
-
-        # Initialize SOTI client
-        soti_client = SotiClient(
-            server_url=soti_creds['server_url'],
-            client_id=soti_creds['client_id'],
-            client_secret=soti_creds['client_secret'],
-            username=soti_creds['username'],
-            password=soti_creds['password']
-        )
-
-        # Get device details
-        device_info = soti_client.get_device_details(device_id)
-        return jsonify(device_info)
-
-    except Exception as e:
-        current_app.logger.error(f"Error fetching SOTI device details: {str(e)}")
-        current_app.logger.debug("Exception details:", exc_info=True)
-        return jsonify({'error': str(e)}), 500
-
-@bp.route('/api/soti/devices/<device_id>/refresh', methods=['POST'])
-@login_required
-def refresh_soti_device(device_id):
-    """Refresh a specific SOTI device"""
-    try:
-        # Get SOTI credentials from session
-        soti_creds = session.get('soti_credentials')
-        if not soti_creds:
-            return jsonify({'error': 'SOTI authentication required'}), 401
-
-        # Initialize SOTI client
-        soti_client = SotiClient(
-            server_url=soti_creds['server_url'],
-            client_id=soti_creds['client_id'],
-            client_secret=soti_creds['client_secret'],
-            username=soti_creds['username'],
-            password=soti_creds['password']
-        )
-
-        # Refresh device
-        success = soti_client.refresh_device(device_id)
-        if success:
-            # Get updated device info
-            device_info = soti_client.get_device_details(device_id)
-            return jsonify({
-                'message': 'Device refreshed successfully',
-                'device': device_info
-            })
+        error_msg = str(e)
+        current_app.logger.error(f"Error loading devices page: {error_msg}")
+        if "configuration is incomplete" in error_msg.lower():
+            # Configuration error
+            return render_template('error.html', 
+                                error="SOTI configuration is incomplete. Please check your environment variables and logs for details."), 500
+        elif "failed to authenticate" in error_msg.lower():
+            # Authentication error
+            return render_template('error.html',
+                                error="Failed to authenticate with SOTI. Please check your credentials and try again."), 500
         else:
-            return jsonify({'error': 'Failed to refresh device'}), 500
+            # Other errors
+            return render_template('error.html',
+                                error="Failed to load devices. Please check the application logs for details."), 500
 
+@bp.route('/api/devices/refresh', methods=['POST'])
+@login_required
+def refresh_devices():
+    """
+    Refresh all devices and return updated data.
+    """
+    try:
+        devices_data = soti_service.refresh_devices()
+        return jsonify(devices_data)
     except Exception as e:
-        current_app.logger.error(f"Error refreshing SOTI device: {str(e)}")
-        current_app.logger.debug("Exception details:", exc_info=True)
-        return jsonify({'error': str(e)}), 500 
+        current_app.logger.error(f"Error refreshing devices: {str(e)}")
+        return jsonify({'error': 'Failed to refresh devices'}), 500
+
+@bp.route('/api/devices/<device_id>/refresh', methods=['POST'])
+@login_required
+def refresh_device(device_id: str):
+    """
+    Refresh a specific device and return updated data.
+    """
+    try:
+        devices_data = soti_service.refresh_device(device_id)
+        return jsonify(devices_data)
+    except Exception as e:
+        current_app.logger.error(f"Error refreshing device {device_id}: {str(e)}")
+        return jsonify({'error': f'Failed to refresh device {device_id}'}), 500
+
+@bp.route('/api/devices/<device_id>', methods=['GET'])
+@login_required
+def get_device_details(device_id: str):
+    """
+    Get detailed information for a specific device.
+    """
+    try:
+        device_details = soti_service.get_device_details(device_id)
+        if device_details:
+            return jsonify(device_details)
+        return jsonify({'error': 'Device not found'}), 404
+    except Exception as e:
+        current_app.logger.error(f"Error fetching device details for {device_id}: {str(e)}")
+        return jsonify({'error': 'Failed to fetch device details'}), 500 

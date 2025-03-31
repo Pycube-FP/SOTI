@@ -5,6 +5,7 @@ from flask_migrate import Migrate
 from flask_session import Session
 from config import Config
 import tempfile
+from app.utils.cache import init_cache
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -20,10 +21,12 @@ def create_app(config_class=Config):
     app.config['SESSION_TYPE'] = 'filesystem'
     app.config['SESSION_FILE_DIR'] = tempfile.gettempdir()
     
+    # Initialize extensions
     db.init_app(app)
     migrate.init_app(app, db)
     login_manager.init_app(app)
     sess.init_app(app)
+    init_cache(app)  # Initialize cache
 
     from app.auth import bp as auth_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')
